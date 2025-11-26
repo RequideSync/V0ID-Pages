@@ -1,0 +1,500 @@
+/* General Reset and Base Styles */
+:root {
+    --bg-color: #080808; /* 真っ黒に近い背景 */
+    --card-color: rgba(255, 255, 255, 0.05); /* ほぼ透明な白ガラス */
+    --main-text-color: #ffffff; /* メインテキストを白に */
+    --sub-text-color: #aaaaaa; /* サブテキストを中間グレーに */
+    --light-gray: #dddddd; /* 明るいグレー */
+    --dark-gray: #222222; /* ダークグレー */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --primary-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); /* 主要なシャドウ */
+    --soft-glow: 0 0 10px rgba(255, 255, 255, 0.1); /* 非常に控えめな光沢 */
+}
+
+/* --- EXCEPTION: Click to Enter のみ水色光沢を維持するため、別途定義 --- */
+.neon-accent-color {
+    --accent-color-neon: #00eaff; /* ネオンブルー */
+}
+.neon-glow-shadow {
+    box-shadow: 0 0 10px var(--accent-color-neon), 0 0 20px rgba(0, 234, 255, 0.3);
+}
+.neon-text-shadow {
+    text-shadow: 0 0 10px var(--accent-color-neon), 0 0 20px rgba(0, 234, 255, 0.3);
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--main-text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- GLOW BACKGROUND EFFECT (モノクローム化) --- */
+.glow-effect {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60vh;
+    height: 60vh;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%); /* 白の控えめな光 */
+    filter: blur(120px);
+    transform: translate(-50%, -50%);
+    animation: pulse-glow 15s infinite alternate;
+    z-index: -1;
+    opacity: 0.2; /* 全体のトーンをさらに抑える */
+}
+
+@keyframes pulse-glow {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- ENTRANCE SCREEN (index.html only) --- */
+#entrance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-out;
+    z-index: 100;
+}
+
+.blurred-bg {
+    backdrop-filter: blur(10px);
+}
+
+.entrance-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: var(--main-text-color);
+    /* Click to Enter のみ水色ネオン光沢を維持 */
+    text-shadow: 0 0 10px #00eaff, 0 0 20px rgba(0, 234, 255, 0.3); 
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    animation: flash-text 2s infinite;
+}
+
+@keyframes flash-text {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+#main-content.hidden {
+    display: none;
+    opacity: 0;
+}
+
+#main-content {
+    transition: opacity 1s ease-in;
+    min-height: 100vh;
+}
+
+/* --- COMMON STYLES --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 40px 0;
+    color: var(--light-gray); /* 明るいグレーのタイトル */
+    text-shadow: none; /* ネオンシャドウを削除 */
+    letter-spacing: 0.1em;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+    background: var(--card-color);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(15px);
+    box-shadow: var(--primary-shadow), inset 0 0 5px rgba(255, 255, 255, 0.03); /* 控えめな内側光沢 */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.9); /* 純粋な黒のシャドウ */
+}
+
+/* --- TOP BAR --- */
+#top-bar {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-link {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--sub-text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 18px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--main-text-color);
+    text-shadow: none; /* ネオンシャドウを削除 */
+}
+
+.nav-link.active {
+    background: linear-gradient(145deg, var(--dark-gray), var(--bg-color)); /* 立体的な黒 */
+    color: var(--main-text-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--light-gray); /* 控えめな強調線 */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1); /* 控えめな光沢 */
+}
+
+/* --- HOME PAGE SECTIONS (index.html) --- */
+.hero-section {
+    text-align: center;
+    padding: 100px 20px;
+    margin-top: 50px;
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    color: var(--main-text-color);
+    text-shadow: none; /* ネオンシャドウを削除 */
+    margin-bottom: 10px;
+    letter-spacing: 0.15em;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--sub-text-color);
+    margin-bottom: 40px;
+}
+
+/* Main Button - 強化 (モノクローム版) */
+.main-button {
+    text-decoration: none;
+    padding: 14px 45px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.2s ease-out;
+    position: relative;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.main-button.glass-button {
+    background: linear-gradient(145deg, #1a1a1a, #000000); /* 黒のグラデーション */
+    color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--light-gray); /* 明るいボーダー */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.main-button.glass-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), transparent, rgba(255, 255, 255, 0.05)); /* 白い光沢 */
+    transition: transform 0.5s;
+    transform: translateX(-100%);
+}
+
+.main-button.glass-button:hover::before {
+    transform: translateX(100%);
+}
+
+.main-button.glass-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+}
+
+.main-button.glass-button:active {
+    transform: translateY(0);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+    background: linear-gradient(145deg, #000000, #1a1a1a); /* 押下時の変化 */
+}
+
+.info-section {
+    padding: 50px 0;
+    margin-top: 50px;
+}
+
+.info-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.info-box {
+    flex: 1;
+    max-width: 300px;
+    padding: 30px;
+    text-align: center;
+}
+
+.info-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+    color: var(--light-gray); /* モノクロームのアイコン */
+    text-shadow: none; /* ネオンシャドウを削除 */
+}
+
+.info-box h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--main-text-color);
+    margin-bottom: 10px;
+    text-shadow: none; /* ネオンシャドウを削除 */
+}
+
+/* --- SCRIPT LIST PAGE (Scriptlist.html) --- */
+.script-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    padding: 30px 0;
+}
+
+.script-card {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    height: auto; 
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+}
+
+.card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1; /* 濃い背景に合わせてもっと薄く */
+    filter: blur(5px);
+    z-index: 1;
+}
+
+.card-content {
+    position: relative;
+    padding: 20px;
+    z-index: 2;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, var(--card-color) 40%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.script-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    color: var(--main-text-color);
+    text-shadow: none; /* ネオンシャドウを削除 */
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.game-name {
+    font-size: 1rem;
+    color: var(--sub-text-color);
+    margin-bottom: 15px;
+}
+
+.script-description {
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+/* Copy Button - 強化 (モノクローム版) */
+.copy-button {
+    background: linear-gradient(145deg, #333333, #111111); /* ダークグレーのグラデーション */
+    color: #ffffff;
+    padding: 12px 25px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+    margin-top: auto;
+}
+
+.copy-button:hover {
+    background: linear-gradient(145deg, #444444, #222222); /* ホバーで少し明るく */
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+
+.copy-button:active {
+    transform: translateY(0);
+    background: linear-gradient(145deg, #111111, #333333);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+/* --- DISCORD PAGE (discord.html) --- */
+.discord-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.discord-box {
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    margin-top: 30px;
+}
+
+.discord-title {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    color: var(--main-text-color);
+    margin-bottom: 20px;
+    text-shadow: none; /* ネオンシャドウを削除 */
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 20px 0;
+}
+
+.discord-content {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.discord-image-container {
+    flex-shrink: 0;
+}
+
+.server-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--light-gray); /* モノクロームのボーダー */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* 控えめな光沢 */
+}
+
+.discord-details {
+    flex-grow: 1;
+}
+
+.server-description {
+    margin-bottom: 20px;
+    font-style: italic;
+    color: var(--sub-text-color);
+}
+
+.member-stats p {
+    margin: 5px 0;
+}
+
+.stat-number {
+    font-weight: bold;
+    color: var(--light-gray); /* モノクロームの数字 */
+    text-shadow: none; /* ネオンシャドウを削除 */
+}
+
+/* Join Button (再利用) - 強化 (モノクローム版) */
+.join-button {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+    background: linear-gradient(145deg, #333333, #111111);
+    color: #ffffff;
+    padding: 14px 25px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: 1px solid var(--light-gray);
+}
+
+.join-button:hover {
+    background: linear-gradient(145deg, #444444, #222222);
+    color: #ffffff;
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+.join-button:active {
+    transform: scale(1.0);
+    background: linear-gradient(145deg, #111111, #333333);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+/* --- UTILITIES & ANIMATIONS --- */
+.fade-in-delay-1, .fade-in-delay-2, .fade-in-delay-3, .fade-in-delay-4, .fade-in-delay-5, .fade-in-delay-6, .fade-in-delay-7 {
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+}
+
+.fade-in-delay-1 { animation-delay: 0.5s; }
+.fade-in-delay-2 { animation-delay: 0.7s; }
+.fade-in-delay-3 { animation-delay: 0.9s; }
+.fade-in-delay-4 { animation-delay: 1.1s; }
+.fade-in-delay-5 { animation-delay: 1.3s; }
+.fade-in-delay-6 { animation-delay: 1.5s; }
+.fade-in-delay-7 { animation-delay: 1.7s; }
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-title { font-size: 3rem; }
+    .info-grid { flex-direction: column; align-items: center; }
+    .discord-content { flex-direction: column; text-align: center; }
+    .discord-details { margin-top: 20px; }
+    .server-icon { margin: 0 auto; }
+}
