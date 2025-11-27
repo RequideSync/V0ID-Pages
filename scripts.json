@@ -6,5 +6,13 @@
         "description": "AutoFarm, Emote Changer, AutoJump, +50 More",
         "image": "image/VOIDHUB_Evade.png",
         "script_code": "loadstring(game:HttpGet('https://raw.githubusercontent.com/RequideSync/V0ID/refs/heads/main/L0L/Evade.lua'))()"
+    },
+    {
+        "id": 2,
+        "title": "V0ID HUB",
+        "game": "Rivals",
+        "description": "Aimbot, ESP",
+        "image": "image/Rivals.png",
+        "script_code": "loadstring(game:HttpGet('https://raw.githubusercontent.com/RequideSync/V0ID/refs/heads/main/L0L/Rivals.lua'))()"
     }
 ]
